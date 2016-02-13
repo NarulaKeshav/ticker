@@ -1,0 +1,162 @@
+/* Importing Google Font */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300);
+
+/* Color Declarations */
+$white: #FFF;
+$gray: #7F8C8D;
+$primary: #333;
+
+/* Declaring Variables */
+$background: linear-gradient(#A2D5AC, #3AAFA9, #557C83);
+$transparent: transparent;
+
+/* Font Properties */
+$font: Roboto;
+$thin: 100;
+$light: 300;
+$normal: 400;
+$bold: 500;
+
+/* Mixins */
+@mixin transition ($seconds) {
+    -webkit-transition: all $seconds;
+    -moz-transition: all $seconds;
+    -ms-transition: all $seconds;
+    transition: all $seconds;
+}
+@mixin brightness($percent) {
+    -webkit-filter: brightness($percent);
+    -moz-filter: brightness($percent);
+    -ms-filter: brightness($percent);
+}
+
+.font-property {
+    font-family: $font;
+    font-weight: $light;
+}
+
+/* General CSS Properties */
+body {
+    background: $background;
+    font-family: $font;
+    font-weight: $light;
+    height: 100vh;
+    padding-top: 4%;
+}
+a:focus,
+a:hover {
+    text-decoration: none;
+}
+
+/* Div Tags CSS */
+.card {
+    background: $white;
+    padding: 0;
+    padding-bottom: 25px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.4);
+}
+.tab-content {
+    background: #34495E;
+}
+.progress {
+    border-radius: 0;
+    height: 3px;
+    background: #203142;
+}
+.progress-bar {
+    border-radius: 0;
+    background: #E91E63;
+}
+.tab-pane {
+    padding: 60px 20px;
+}
+
+/* Image Tags CSS */
+img {
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+.img-logo {
+    height: 70px;
+    margin: inherit;
+    margin-bottom: 40px;
+}
+
+
+/* Button Tags CSS */
+.btn {
+    @include transition(0.5s);
+    border-radius: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    background: $transparent;
+}
+.btn-start {
+    color: #1ABC9C;
+}
+.btn-stop {
+    color: #888;
+}
+.btn-reset {
+    color: #888;
+}
+
+/* Text Properties CSS */
+.timer-count {
+    font-weight: $light;
+    font-size: 60px;
+    color: $white;
+    text-align: center;
+}
+.mili {
+    font-size: 30px;
+}
+.unit {
+    font-size: 30px;
+    padding: 0 6px;
+    font-weight: $light;
+    color: rgba(255,255,255,0.8);
+}
+
+/* Span and Extra CSS */
+.nav {
+    background: #34495E;
+    width: 100%;
+    padding: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.nav-tabs {
+    padding: 0px 0;
+}
+.nav-tabs > li {
+    padding: 0;
+    @include transition(0.5s);
+    background: transparent;
+    border-radius: 0;
+    width: 50%;
+    text-align: center;
+}
+.nav-tabs > li > a {
+    @include transition(0.5s);
+    background: transparent;
+    border: 0;
+    padding: 16px 0;
+    border-bottom: 2px solid $transparent;
+    border-radius: 0;
+    color: rgba(255,255,255,0.5);
+}
+.nav-tabs > li > a:focus, 
+.nav-tabs > li > a:hover {
+    background: transparent;
+    color: $white;
+    border-color: transparent;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+    border: 0;
+    color: $white;
+    background: transparent;
+    border-bottom: 2px solid $white;
+}
