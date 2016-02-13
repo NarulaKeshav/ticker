@@ -1,0 +1,71 @@
+doctype html
+html
+    head
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        meta(charset="UTF-8")
+
+        // Favicon and Title
+        title#page-title Ticker - Countdown & Stopwatch
+        link(rel='shortcut icon', href='img/silicon.png')
+
+        // META TAGS
+        meta(property='og:title', content='Ticker')
+        meta(property='og:description', content='Ticker')
+
+        // CSS CDNs
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
+
+        // MY CSS FILE
+        link(rel='stylesheet', href='scss/design.css', media="all")
+    body
+        .col-md-12
+            .col-md-4.col-md-offset-4
+                img.img-logo(src="logo.png")
+                .row.card
+                    ul.nav.nav-tabs(role='tablist')
+                        li.active(role='presentation')
+                            a(href='#timer', aria-controls='timer', role='tab', data-toggle='tab') 
+                                span.fa.fa-hourglass-o
+                                |  &nbsp;Timer
+                        li(role='presentation')
+                            a(href='#stopwatch', aria-controls='stopwatch', role='tab', data-toggle='tab') 
+                                span.fa.fa-clock-o
+                                |  &nbsp;Stopwatch
+
+                    .tab-content
+                        #timer.tab-pane.active(role='tabpanel')
+                            p.timer-count 
+                                span#timer-hour-count 0
+                                span.unit h 
+                                span#timer-minute-count 04
+                                span.unit m
+                                span#timer-second-count 12
+                                span.unit s
+                        #stopwatch.tab-pane(role='tabpanel')
+                            p.timer-count
+                                span#timer-minute-count 04
+                                span.unit m
+                                span#timer-second-count 12
+                                span.unit s
+                                span.mili 00
+                    .progress
+                        .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
+                    .col-md-12
+                        .col-md-4(align="left")
+                            button.btn.btn-reset(id="btn-reset") Reset
+                        .col-md-8(align="right")
+                            button.btn.btn-stop(id="btn-stop") Stop
+                            button.btn.btn-start(id="btn-start") Start
+
+
+
+        
+        // JAVASCRIPT CDNs
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js')
+
+        // MY JAVSCRIPT FILE
+        script(src='js/feed.js')
