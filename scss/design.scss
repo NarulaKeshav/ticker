@@ -7,7 +7,7 @@ $gray: #7F8C8D;
 $primary: #333;
 
 /* Declaring Variables */
-$background: linear-gradient(#A2D5AC, #3AAFA9, #557C83);
+$background: linear-gradient(#7FB1C9, #A570CC);
 $transparent: transparent;
 
 /* Font Properties */
@@ -41,7 +41,7 @@ body {
     font-family: $font;
     font-weight: $light;
     height: 100vh;
-    padding-top: 4%;
+    padding-top: 6%;
 }
 a:focus,
 a:hover {
@@ -53,19 +53,19 @@ a:hover {
     background: $white;
     padding: 0;
     padding-bottom: 25px;
-    box-shadow: 0px 3px 10px rgba(0,0,0,0.4);
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
 }
 .tab-content {
-    background: #34495E;
+    background: $white;
 }
 .progress {
     border-radius: 0;
-    height: 3px;
-    background: #203142;
+    height: 2px;
+    background: #F5F5F5;
 }
 .progress-bar {
     border-radius: 0;
-    background: #E91E63;
+    background: #FF4D89;
 }
 .tab-pane {
     padding: 60px 20px;
@@ -85,51 +85,74 @@ img {
 
 
 /* Button Tags CSS */
-.btn {
+.btn,
+.btn:focus {
     @include transition(0.5s);
     border-radius: 0;
     text-transform: uppercase;
     font-size: 14px;
     background: $transparent;
+    outline: 0;
 }
-.btn-start {
-    color: #1ABC9C;
+.btn-start,
+.btn-start:focus {
+    color: #FF4D89;
 }
-.btn-stop {
-    color: #888;
+.btn-start:hover {
+    background: #F5F5F5;
+    color: #FF4D89;
 }
-.btn-reset {
-    color: #888;
+.btn-stop,
+.btn-reset,
+.btn-stop:focus,
+.btn-reset:focus {
+    color: #AAA;
+}
+.btn-stop:hover,
+.btn-reset:hover {
+    background: #F5F5F5;
+    color: #666;
+}
+.btn-reset,
+.btn-reset:focus {
+    background: #F5F5F5;
+}
+.btn-reset:hover {
+    background: #EEE;
 }
 
 /* Text Properties CSS */
-.timer-count {
-    font-weight: $light;
+#stopwatch-count {
     font-size: 60px;
-    color: $white;
     text-align: center;
+    color: #444;
+    line-height: 77px;
 }
 .mili {
     font-size: 30px;
+    color: #FF4D89;
+    padding-left: 4px;
 }
 .unit {
     font-size: 30px;
     padding: 0 6px;
     font-weight: $light;
-    color: rgba(255,255,255,0.8);
+    // color: rgba(255,255,255,0.8);
+    color: rgba(0,0,0,0.8);
 }
 
 /* Span and Extra CSS */
 .nav {
-    background: #34495E;
+    background: $white;
     width: 100%;
     padding: 0;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid #EEE;
 }
 .nav-tabs {
     padding: 0px 0;
 }
 .nav-tabs > li {
+    font-weight: $normal;
     padding: 0;
     @include transition(0.5s);
     background: transparent;
@@ -144,19 +167,31 @@ img {
     padding: 16px 0;
     border-bottom: 2px solid $transparent;
     border-radius: 0;
-    color: rgba(255,255,255,0.5);
+    color: #BBB;
 }
 .nav-tabs > li > a:focus, 
 .nav-tabs > li > a:hover {
     background: transparent;
-    color: $white;
+    color: #888;
     border-color: transparent;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:focus,
 .nav-tabs > li.active > a:hover {
     border: 0;
-    color: $white;
+    color: #FF4D89;
     background: transparent;
-    border-bottom: 2px solid $white;
+    border-bottom: 2px solid #FF4D89;
+}
+.form-control,
+.form-control:focus {
+    border: none;
+    height: auto;
+    box-shadow: none;
+    outline: 0;
+    font-size: 60px;
+    text-align: center;
+}
+::-webkit-input-placeholder {
+    color: #909;
 }
