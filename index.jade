@@ -22,7 +22,6 @@ html
     body
         .col-md-12
             .col-md-4.col-md-offset-4
-                img.img-logo(src="logo.png")
                 .row.card
                     ul.nav.nav-tabs(role='tablist')
                         li.active(role='presentation')
@@ -36,22 +35,25 @@ html
 
                     .tab-content
                         #timer.tab-pane.active(role='tabpanel')
-                            p.timer-count 
-                                span#timer-hour-count 0
-                                span.unit h 
-                                span#timer-minute-count 04
-                                span.unit m
-                                span#timer-second-count 12
-                                span.unit s
+                            //- p.timer-count 
+                            //-     span#timer-hour-count 0
+                            //-     span.unit h 
+                            //-     span#timer-minute-count 04
+                            //-     span.unit m
+                            //-     span#timer-second-count 12
+                            //-     span.unit s
+                            input.form-control(id="timer-count", placeholder="00:05:00")
                         #stopwatch.tab-pane(role='tabpanel')
-                            p.timer-count
-                                span#timer-minute-count 04
-                                span.unit m
-                                span#timer-second-count 12
-                                span.unit s
+                            //- p.timer-count
+                            //-     span#timer-minute-count 04
+                            //-     span.unit m
+                            //-     span#timer-second-count 12
+                            //-     span.unit s
+                            //-     span.mili 00
+                            p#stopwatch-count 00:00:00
                                 span.mili 00
                     .progress
-                        .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
+                        .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 45%;')
                     .col-md-12
                         .col-md-4(align="left")
                             button.btn.btn-reset(id="btn-reset") Reset
