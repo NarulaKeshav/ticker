@@ -24,12 +24,9 @@ $(document).ready(function() {
     var stopwatchLap = d.getElementById("lap-stopwatch");
 
     // Creating Basic Time element
-    var timerClock = d.createElement("p");
+    var timerCount = d.createElement("p");
+    var timerClock = d.createElement("span");
     var timerMilli = d.createElement("span");
-
-    // Assigning Properties
-    timerClock.setAttribute("id", "timer-count");
-    timerMilli.setAttribute("id", "mili");
 
     /* Getting time for the timer and stopwatch */
     var hours = 0;
@@ -37,6 +34,7 @@ $(document).ready(function() {
     var seconds = 0;
     var milliseconds = 0;
     var t;
+    var p;
 
     // Adding EventHandler to listen for click on Tabs
     var clickedTab = false;
@@ -47,6 +45,7 @@ $(document).ready(function() {
         stopwatchMilli.innerHTML = "00";
         clearTimeout(t);
         hours = minutes = seconds = milliseconds = 0;
+        displayMessageBox("", "none");
 
     }
     var tab = d.getElementById("main-tab");
@@ -108,22 +107,29 @@ $(document).ready(function() {
     timerStart.onclick = function() {
         if(input.value === "") { displayMessageBox("Please enter some time.", "block"); }
         else convertInputToTime();
+        $("#start-timer").prop("disabled", true);
     };
 
     timerStop.onclick = function() {
         // timerStart.setAttribute("disabled", "false");
         clearTimeout(t);
+        $("#start-timer").prop("disabled", false);
     };
 
     timerReset.onclick = function() {
         input.value = "";
         $("#timer-count").css("display", "none");
         $("#input").css("display", "block");
+        $("#start-timer").prop("disabled", false);
     };
 
     // Updates the time every 15 milliseconds
     function timerTimeElapsed() {
         t = setTimeout(updateTimer, 15);
+    }
+
+    function updateProgressBar() {
+        p = setTimeout(progressTheBar, 1);
     }
 
     function convertInputToTime() {
@@ -133,11 +139,16 @@ $(document).ready(function() {
             arr[i] = arr[i].replace("0", "");
         }
 
+        // Assigning Properties
+        timerCount.setAttribute("id", "timer-count");
+        timerMilli.setAttribute("id", "mili");
+
         timerClock.innerHTML = arr[0] + ":" + arr[1] + ":" + arr[2];  
         timerMilli.innerHTML = "60";
 
-        timerClock.appendChild(timerMilli);
-        content.appendChild(timerClock);
+        timerCount.appendChild(timerClock);
+        timerCount.appendChild(timerMilli);
+        content.appendChild(timerCount);
 
         $("#timer-count").css("display", "block");
         $("#input").css("display", "none");
@@ -147,6 +158,7 @@ $(document).ready(function() {
         minutes = arr[1];
         seconds = arr[2];
 
+        progressTheBar();
         updateTimer();
     }
 
@@ -167,7 +179,7 @@ $(document).ready(function() {
 
         //SIMPLIFY THIS CODE
         timerClock.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-        timerMilli.innerHTML = (milliseconds > 9 ? milliseconds : "0" + milliseconds);
+        timerMilli.innerHTML = milliseconds > 9 ? milliseconds : "0" + milliseconds;
         timerTimeElapsed();
     }
 
@@ -178,6 +190,23 @@ $(document).ready(function() {
         }
         input.value = "";
         return true;
+    }
+
+    function progressTheBar() {
+        var splitTime = timerClock.innerHTML.split(":");
+        var currentTimeInSeconds = (splitTime[0] * 3600) + (splitTime[1] * 60) + splitTime[2];
+
+        var mainTime = input.value.split(":");
+        var totalTime = (mainTime[0] * 3600) + (mainTime[1] * 60) + mainTime[2];
+
+        var elapsedTime = totalTime - currentTimeInSeconds;
+
+        var progress = (elapsedTime / totalTime) * 100;
+        var percent = progress * 100;
+        console.log("Percentage: " + percent + "%");
+
+        $(".progress-bar").css("width", percent + "%");
+        updateProgressBar();
     }
 
     // Closes the message box if the "x" is clicked
