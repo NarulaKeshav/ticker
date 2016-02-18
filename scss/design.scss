@@ -41,7 +41,7 @@ body {
     font-family: $font;
     font-weight: $light;
     height: 100vh;
-    padding-top: 6%;
+    padding-top: 4%;
 }
 a:focus,
 a:hover {
@@ -86,9 +86,8 @@ img {
     -o-user-drag: none;
 }
 .img-logo {
-    height: 70px;
-    margin: inherit;
-    margin-bottom: 40px;
+    height: 40px;
+    margin-bottom: 30px;
 }
 
 
@@ -151,6 +150,24 @@ img {
     color: $white;
     font-size: 15px;
     margin: 0;
+}
+.about,
+.about:focus {
+    @include transition(0.5s);
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-weight: $normal;
+    background: rgba(0,0,0,0.3);
+    padding: 12px 20px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+    margin: 0;
+}
+.about:hover {
+    background: rgba(0,0,0,0.4);
+    color: $white;
 }
 
 /* Span and Extra CSS */
