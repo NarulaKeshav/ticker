@@ -6,12 +6,14 @@ $(document).ready(function() {
     // Getting HTML Elements by ID
     var d = document;
     var content = d.getElementById("timer-content");
+    var message = d.getElementById("message");
+    var closeMessage = d.getElementById("close-message");
 
     // Tags for Timer
     var timerStart = d.getElementById("start-timer");
     var timerStop = d.getElementById("stop-timer");
     var timerReset = d.getElementById("reset-timer");
-    var input = d.getElementById("timer-count");
+    var input = d.getElementById("input");
 
     // Tags for Stopwatch
     var stopwatchTime = d.getElementById("stopwatch-clock");
@@ -28,7 +30,6 @@ $(document).ready(function() {
     // Assigning Properties
     timerClock.setAttribute("id", "timer-count");
     timerMilli.setAttribute("id", "mili");
-    timerClock.appendChild(timerMilli);
 
     /* Getting time for the timer and stopwatch */
     var hours = 0;
@@ -69,6 +70,8 @@ $(document).ready(function() {
             }
         }
 
+        $("#start-stopwatch").prop("disabled", true);
+
         //SIMPLIFY THIS CODE
         stopwatchTime.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
         stopwatchMilli.innerHTML = (milliseconds > 9 ? milliseconds : "0" + milliseconds);
@@ -84,6 +87,7 @@ $(document).ready(function() {
     // Stops the stopwatch time
     stopwatchStop.onclick = function() {
         clearTimeout(t);
+        $("#start-stopwatch").prop("disabled", false);
     };
 
     // Resets the time
@@ -92,10 +96,30 @@ $(document).ready(function() {
         stopwatchMilli.innerHTML = "00";
         hours = minutes = seconds = milliseconds = 0;
         clearTimeout(t);
+        $("#start-stopwatch").prop("disabled", false);
     };
 
+    function displayMessageBox(error, type) {
+        $(".message-box").css("display", type);
+        message.innerHTML = error;
+    }
+
     // Timer
-    timerStart.onclick = convertInputToTime;
+    timerStart.onclick = function() {
+        if(input.value === "") { displayMessageBox("Please enter some time.", "block"); }
+        else convertInputToTime();
+    };
+
+    timerStop.onclick = function() {
+        // timerStart.setAttribute("disabled", "false");
+        clearTimeout(t);
+    };
+
+    timerReset.onclick = function() {
+        input.value = "";
+        $("#timer-count").css("display", "none");
+        $("#input").css("display", "block");
+    };
 
     // Updates the time every 15 milliseconds
     function timerTimeElapsed() {
@@ -104,21 +128,22 @@ $(document).ready(function() {
 
     function convertInputToTime() {
         var time = input.value;
-        isValidInput(time);
         var arr = time.split(":");
         for(var i = 0; i < arr.length; i++) {
-            arr[i] = arr[i].replace("0\g", "");
+            arr[i] = arr[i].replace("0", "");
         }
 
         timerClock.innerHTML = arr[0] + ":" + arr[1] + ":" + arr[2];  
         timerMilli.innerHTML = "60";
 
+        timerClock.appendChild(timerMilli);
         content.appendChild(timerClock);
 
-        $("#timer-count").css("display", "none");
-        timerStart.setAttribute("disabled", "true");
+        $("#timer-count").css("display", "block");
+        $("#input").css("display", "none");
+        // timerStart.setAttribute("disabled", "true");
 
-        hours = arr[0].substring(1,2);
+        hours = arr[0];
         minutes = arr[1];
         seconds = arr[2];
 
@@ -147,13 +172,17 @@ $(document).ready(function() {
     }
 
     function isValidInput(input) {
-        var regex = "\D";
+        var regex = "[\D\g]";
         if(input.match(regex)) {
-            alert("Please enter valid input.");
+            return false;
         }
         input.value = "";
+        return true;
     }
 
-
+    // Closes the message box if the "x" is clicked
+    closeMessage.onclick = function() {
+        displayMessageBox("", "none");
+    };
 
 });
