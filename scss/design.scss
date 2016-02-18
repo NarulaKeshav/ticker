@@ -71,6 +71,13 @@ a:hover {
     padding: 60px 20px;
     padding-bottom: 0px;
 }
+.message-box {
+    @include transition(0.5s);
+    background: rgba(0,0,0,0.2);
+    padding: 16px 10px;
+    margin-top: 20px;
+    display: none;
+}
 
 /* Image Tags CSS */
 img {
@@ -140,12 +147,10 @@ img {
     padding-left: 4px;
     font-weight: 100;
 }
-.unit {
-    font-size: 30px;
-    padding: 0 6px;
-    font-weight: $light;
-    // color: rgba(255,255,255,0.8);
-    color: rgba(0,0,0,0.8);
+#message {
+    color: $white;
+    font-size: 15px;
+    margin: 0;
 }
 
 /* Span and Extra CSS */
@@ -203,4 +208,9 @@ img {
 }
 ::-webkit-input-placeholder {
     color: #909;
+}
+#close-message {
+    @include transition(0.5s);
+    color: $white;
+    font-weight: $light;
 }
