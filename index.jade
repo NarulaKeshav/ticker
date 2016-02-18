@@ -36,7 +36,7 @@ html
                     .tab-content#main-content
                         #timer.tab-pane.active(role='tabpanel')
                             #timer-content
-                                input.form-control(id="timer-count", placeholder="00:05:00", maxlength="8")
+                                input.form-control(id="input", placeholder="00:05:00", maxlength="8" type="text")
                             .progress.row
                                 .progress-bar(role='progressbar', id="timer-bar", aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
                             .row
@@ -58,6 +58,11 @@ html
                                 .col-md-6(align="right")
                                     button.btn.btn-stop(id="stop-stopwatch") Stop
                                     button.btn.btn-start(id="start-stopwatch") Start
+                .row.message-box.wow.bounceInUp
+                    .col-md-11
+                        p#message Please enter valid time.
+                    .col-md-1(align="right")
+                        button.close(id="close-message") ×
         // JAVASCRIPT CDNs
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
