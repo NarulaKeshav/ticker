@@ -6,7 +6,7 @@ html
 
         // Favicon and Title
         title#page-title Ticker - Countdown & Stopwatch
-        link(rel='shortcut icon', href='img/silicon.png')
+        link(rel='shortcut icon', href='favicon.png')
 
         // META TAGS
         meta(property='og:title', content='Ticker')
@@ -15,13 +15,14 @@ html
         // CSS CDNs
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
         link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css')
-        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
 
         // MY CSS FILE
         link(rel='stylesheet', href='scss/design.css', media="all")
     body
         .col-md-12
             .col-md-4.col-md-offset-4
+                .row(align="center")
+                    img.img-logo(src="logo.png")
                 .row.card
                     ul.nav.nav-tabs(id="main-tab", role='tablist')
                         li.active(role='presentation')
@@ -36,7 +37,7 @@ html
                     .tab-content#main-content
                         #timer.tab-pane.active(role='tabpanel')
                             #timer-content
-                                input.form-control(id="input", placeholder="00:05:00", maxlength="8" type="text")
+                                input.form-control(id="input", placeholder="00:05:00", maxlength="8")
                             .progress.row
                                 .progress-bar(role='progressbar', id="timer-bar", aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
                             .row
@@ -63,6 +64,8 @@ html
                         p#message Please enter valid time.
                     .col-md-1(align="right")
                         button.close(id="close-message") ×
+        a.about(href="https://github.com/NarulaKeshav/ticker", target="_blank") About Ticker
+
         // JAVASCRIPT CDNs
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
