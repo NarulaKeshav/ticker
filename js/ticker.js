@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
-    
+    // Initializing WOW JS
+    new WOW().init();
     
     // Getting HTML Elements by ID
     var d = document;
