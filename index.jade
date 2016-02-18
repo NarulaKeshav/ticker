@@ -23,7 +23,7 @@ html
         .col-md-12
             .col-md-4.col-md-offset-4
                 .row.card
-                    ul.nav.nav-tabs(role='tablist')
+                    ul.nav.nav-tabs(id="main-tab", role='tablist')
                         li.active(role='presentation')
                             a(href='#timer', aria-controls='timer', role='tab', data-toggle='tab') 
                                 span.fa.fa-hourglass-o
@@ -33,41 +33,35 @@ html
                                 span.fa.fa-clock-o
                                 |  &nbsp;Stopwatch
 
-                    .tab-content
+                    .tab-content#main-content
                         #timer.tab-pane.active(role='tabpanel')
-                            //- p.timer-count 
-                            //-     span#timer-hour-count 0
-                            //-     span.unit h 
-                            //-     span#timer-minute-count 04
-                            //-     span.unit m
-                            //-     span#timer-second-count 12
-                            //-     span.unit s
-                            input.form-control(id="timer-count", placeholder="00:05:00")
+                            #timer-content
+                                input.form-control(id="timer-count", placeholder="00:05:00", maxlength="8")
+                            .progress.row
+                                .progress-bar(role='progressbar', id="timer-bar", aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
+                            .row
+                                .col-md-4(align="left")
+                                    button.btn.btn-reset(id="reset-timer") Reset
+                                .col-md-8(align="right")
+                                    button.btn.btn-stop(id="stop-timer") Stop
+                                    button.btn.btn-start(id="start-timer") Start
                         #stopwatch.tab-pane(role='tabpanel')
-                            //- p.timer-count
-                            //-     span#timer-minute-count 04
-                            //-     span.unit m
-                            //-     span#timer-second-count 12
-                            //-     span.unit s
-                            //-     span.mili 00
-                            p#stopwatch-count 00:00:00
-                                span.mili 00
-                    .progress
-                        .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 45%;')
-                    .col-md-12
-                        .col-md-4(align="left")
-                            button.btn.btn-reset(id="btn-reset") Reset
-                        .col-md-8(align="right")
-                            button.btn.btn-stop(id="btn-stop") Stop
-                            button.btn.btn-start(id="btn-start") Start
-
-
-
-        
+                            p#stopwatch-count 
+                                span#stopwatch-clock 00:34:30
+                                span#mili 00
+                            .progress.row
+                                .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 100%;')
+                            .row
+                                .col-md-6(align="left")
+                                    button.btn.btn-reset(id="reset-stopwatch") Reset
+                                    button.btn.btn-reset(id="lap-stopwatch") Lap
+                                .col-md-6(align="right")
+                                    button.btn.btn-stop(id="stop-stopwatch") Stop
+                                    button.btn.btn-start(id="start-stopwatch") Start
         // JAVASCRIPT CDNs
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js')
 
         // MY JAVSCRIPT FILE
-        script(src='js/feed.js')
+        script(src='js/ticker.js')
