@@ -109,11 +109,34 @@ $(document).ready(function() {
     /* Starts the timer if the button is clicked */
     timerStart.onclick = function() {
         if(input.value === "") { displayMessageBox("Please enter some time.", "block"); }
+        var testArr = input.value.split(":");
+        if(!isNumber(testArr[0])) {
+                displayMessageBox("Don't enter text. Enter time bruh.", "block");
+                input.value = "";
+            }
         else {
-            convertInputToTime();
-            $("#start-timer").prop("disabled", true);
+            var time = input.value;
+            var arr = time.split(":");
+            for(var i = 0; i < arr.length; i++) {
+                arr[i] = arr[i].replace("0", "");
+            }
+            hours = parseInt(arr[0]);
+            minutes = parseInt(arr[1]);
+            seconds = parseInt(arr[2]);
+            if(hours > 23 || minutes > 60 || seconds > 60) {
+                displayMessageBox("Please enter time in right format.", "block");
+                input.value = "";
+            }
+            else {
+                convertInputToTime(hours, minutes, seconds);
+                $("#start-timer").prop("disabled", true);
+            }
         }
     };
+
+    function isNumber(n) { 
+        return /^-?[\d.]+(?:e-?\d+)?$/.test(n); 
+    } 
 
     /* Stops the timer time when button is clicked */
     timerStop.onclick = function() {
@@ -129,6 +152,7 @@ $(document).ready(function() {
         $("#input").css("display", "block");
         $("#start-timer").prop("disabled", false);
         $(".progress-bar").css("width", "0%");
+        hours = minutes = seconds = milliseconds = 0;
     };
 
     /* Updates the time every 15 milliseconds */
@@ -142,18 +166,13 @@ $(document).ready(function() {
     }
 
     /* Grabs the input data and converts it to a string, which is displayed and input is hidden*/
-    function convertInputToTime() {
-        var time = input.value;
-        var arr = time.split(":");
-        for(var i = 0; i < arr.length; i++) {
-            arr[i] = arr[i].replace("0", "");
-        }
+    function convertInputToTime(hr, mn, sc) {
 
         // Assigning Properties
         timerCount.setAttribute("id", "timer-count");
         timerMilli.setAttribute("id", "mili");
 
-        timerClock.innerHTML = arr[0] + ":" + arr[1] + ":" + arr[2];  
+        timerClock.innerHTML = hr + ":" + mn + ":" + sc;  
         timerMilli.innerHTML = "60";
 
         timerCount.appendChild(timerClock);
@@ -163,10 +182,6 @@ $(document).ready(function() {
         $("#timer-count").css("display", "block");
         $("#input").css("display", "none");
         // timerStart.setAttribute("disabled", "true");
-
-        hours = arr[0];
-        minutes = arr[1];
-        seconds = arr[2];
 
         progressTheBar();
         updateTimer();
