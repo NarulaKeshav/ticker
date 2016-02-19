@@ -39,6 +39,7 @@ html
                         #timer.tab-pane.active(role='tabpanel')
                             #timer-content
                                 input.form-control(id="input", placeholder="00:05:00", maxlength="8")
+                                audio(id="audio", src="alarm.mp3")
                             .progress.row
                                 .progress-bar(role='progressbar', id="timer-bar", aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
                             .row
