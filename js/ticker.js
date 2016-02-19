@@ -109,8 +109,10 @@ $(document).ready(function() {
     /* Starts the timer if the button is clicked */
     timerStart.onclick = function() {
         if(input.value === "") { displayMessageBox("Please enter some time.", "block"); }
-        else convertInputToTime();
-        $("#start-timer").prop("disabled", true);
+        else {
+            convertInputToTime();
+            $("#start-timer").prop("disabled", true);
+        }
     };
 
     /* Stops the timer time when button is clicked */
@@ -126,6 +128,7 @@ $(document).ready(function() {
         $("#timer-count").css("display", "none");
         $("#input").css("display", "block");
         $("#start-timer").prop("disabled", false);
+        $(".progress-bar").css("width", "0%");
     };
 
     /* Updates the time every 15 milliseconds */
@@ -172,27 +175,26 @@ $(document).ready(function() {
     /* Updates the timer time and converts to necessary format */
     function updateTimer() {
         milliseconds--;
-        if(milliseconds <= 0) {
-            milliseconds = 60;
+        if(milliseconds < 0) {
+            milliseconds = 59;
             seconds--;
-            if(seconds <= 0) { 
-                seconds = 60; 
+            if(seconds < 0) { 
+                seconds = 59; 
                 minutes--; 
-                if(minutes <= 0) {
-                    minutes = 60;
-                    if(hours === 0) { hours = 0; console.log("Hours = 0"); }
+                if(minutes < 0) {
+                    minutes = 59;
+                    if(hours < 0) hours = 0;
                     else hours--;
                 }
             }
         }
-        if(seconds === 0 && minutes === 0 && hours === 0) {
-            t = clearTimeout(updateTimer);
-        }
-
-        //SIMPLIFY THIS CODE
         timerClock.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
         timerMilli.innerHTML = milliseconds > 9 ? milliseconds : "0" + milliseconds;
-        timerTimeElapsed();
+        if(hours == 0 && minutes == 0 && seconds == 0 && milliseconds == 0) {
+            console.log("Everything is 0");
+            clearTimeout(t);
+        }
+        else timerTimeElapsed();
     }
 
     /* Checks whether the input string in valid or not */
