@@ -14,6 +14,7 @@ $(document).ready(function() {
     var timerStop = d.getElementById("stop-timer");
     var timerReset = d.getElementById("reset-timer");
     var input = d.getElementById("input");
+    var audio = d.getElementById("audio");
 
     // Tags for Stopwatch
     var stopwatchTime = d.getElementById("stopwatch-clock");
@@ -53,7 +54,7 @@ $(document).ready(function() {
 
     // STOPWATCH OPERATIONS
 
-    /* starts the stopwatch timer and displays it in necessary format */
+    /* Starts the stopwatch timer and displays it in necessary format */
     function startStopwatch() {
         milliseconds++;
         if(milliseconds >= 60) {
@@ -106,6 +107,8 @@ $(document).ready(function() {
         message.innerHTML = error;
     }
 
+    // TIMER OPERATIONS
+
     /* Starts the timer if the button is clicked */
     timerStart.onclick = function() {
         if(input.value === "") { displayMessageBox("Please enter some time.", "block"); }
@@ -113,10 +116,9 @@ $(document).ready(function() {
         if(!isNumber(testArr[0])) {
                 displayMessageBox("Don't enter text. Enter time bruh.", "block");
                 input.value = "";
-            }
+        }
         else {
-            var time = input.value;
-            var arr = time.split(":");
+            var arr = input.value.split(":");
             for(var i = 0; i < arr.length; i++) {
                 arr[i] = arr[i].replace("0", "");
             }
@@ -143,6 +145,8 @@ $(document).ready(function() {
         // timerStart.setAttribute("disabled", "false");
         clearTimeout(t);
         $("#start-timer").prop("disabled", false);
+        audio.pause();
+        audio.currentTime = 0;
     };
 
     /* Resets the timer time when button is clicked */
@@ -208,6 +212,7 @@ $(document).ready(function() {
         if(hours == 0 && minutes == 0 && seconds == 0 && milliseconds == 0) {
             console.log("Everything is 0");
             clearTimeout(t);
+            audio.play();
         }
         else timerTimeElapsed();
     }
