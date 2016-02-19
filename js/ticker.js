@@ -36,7 +36,7 @@ $(document).ready(function() {
     var t;
     var p;
 
-    // Adding EventHandler to listen for click on Tabs
+    /* Resets all the timers to 0 when tab is switched */
     var clickedTab = false;
     function tabClickHandler() {
         clickedTab = true;
@@ -51,9 +51,9 @@ $(document).ready(function() {
     var tab = d.getElementById("main-tab");
     tab.addEventListener("click", tabClickHandler);
 
-    // Stopwatch Operations
+    // STOPWATCH OPERATIONS
 
-    // Starts the stopwatch count
+    /* starts the stopwatch timer and displays it in necessary format */
     function startStopwatch() {
         milliseconds++;
         if(milliseconds >= 60) {
@@ -77,19 +77,21 @@ $(document).ready(function() {
         timeElapsed();
     }
 
-    // Updates the time every 15 milliseconds
+    /* Updates the time every 15 milliseconds */
     function timeElapsed() {
         t = setTimeout(startStopwatch, 15);
     }
+    
+    /* Starts the stopwatch on button click */
     stopwatchStart.onclick = startStopwatch;
 
-    // Stops the stopwatch time
+    /* Stops the stopwatch time on button click */
     stopwatchStop.onclick = function() {
         clearTimeout(t);
         $("#start-stopwatch").prop("disabled", false);
     };
 
-    // Resets the time
+    /* Resets the stopwatch time on button click */
     stopwatchReset.onclick = function() {
         stopwatchTime.innerHTML = "00:00:00";
         stopwatchMilli.innerHTML = "00";
@@ -98,24 +100,27 @@ $(document).ready(function() {
         $("#start-stopwatch").prop("disabled", false);
     };
 
+    /* Displays a error message box if any errors */
     function displayMessageBox(error, type) {
         $(".message-box").css("display", type);
         message.innerHTML = error;
     }
 
-    // Timer
+    /* Starts the timer if the button is clicked */
     timerStart.onclick = function() {
         if(input.value === "") { displayMessageBox("Please enter some time.", "block"); }
         else convertInputToTime();
         $("#start-timer").prop("disabled", true);
     };
 
+    /* Stops the timer time when button is clicked */
     timerStop.onclick = function() {
         // timerStart.setAttribute("disabled", "false");
         clearTimeout(t);
         $("#start-timer").prop("disabled", false);
     };
 
+    /* Resets the timer time when button is clicked */
     timerReset.onclick = function() {
         input.value = "";
         $("#timer-count").css("display", "none");
@@ -123,15 +128,17 @@ $(document).ready(function() {
         $("#start-timer").prop("disabled", false);
     };
 
-    // Updates the time every 15 milliseconds
+    /* Updates the time every 15 milliseconds */
     function timerTimeElapsed() {
         t = setTimeout(updateTimer, 15);
     }
 
+    /* Updates the progress bar every millisecond */
     function updateProgressBar() {
         p = setTimeout(progressTheBar, 1);
     }
 
+    /* Grabs the input data and converts it to a string, which is displayed and input is hidden*/
     function convertInputToTime() {
         var time = input.value;
         var arr = time.split(":");
@@ -162,19 +169,24 @@ $(document).ready(function() {
         updateTimer();
     }
 
+    /* Updates the timer time and converts to necessary format */
     function updateTimer() {
         milliseconds--;
         if(milliseconds <= 0) {
             milliseconds = 60;
             seconds--;
             if(seconds <= 0) { 
-                seconds = 59; 
+                seconds = 60; 
                 minutes--; 
                 if(minutes <= 0) {
-                    minutes = 59;
-                    hours--;
+                    minutes = 60;
+                    if(hours === 0) { hours = 0; console.log("Hours = 0"); }
+                    else hours--;
                 }
             }
+        }
+        if(seconds === 0 && minutes === 0 && hours === 0) {
+            t = clearTimeout(updateTimer);
         }
 
         //SIMPLIFY THIS CODE
@@ -183,35 +195,32 @@ $(document).ready(function() {
         timerTimeElapsed();
     }
 
+    /* Checks whether the input string in valid or not */
     function isValidInput(input) {
         var regex = "[\D\g]";
-        if(input.match(regex)) {
-            return false;
-        }
+        if(input.match(regex)) return false;
         input.value = "";
         return true;
     }
 
+    /* Progresses the progress bar by taking elapsed time / totalTime */
     function progressTheBar() {
         var splitTime = timerClock.innerHTML.split(":");
-        var currentTimeInSeconds = (splitTime[0] * 3600) + (splitTime[1] * 60) + splitTime[2];
+        var currentTimeInSeconds = (parseInt(splitTime[0] * 3600)) + (parseInt(splitTime[1] * 60)) + parseInt(splitTime[2]);
 
         var mainTime = input.value.split(":");
-        var totalTime = (mainTime[0] * 3600) + (mainTime[1] * 60) + mainTime[2];
+        var totalTime = (parseInt(mainTime[0] * 3600)) + (parseInt(mainTime[1] * 60)) + parseInt(mainTime[2]);
 
         var elapsedTime = totalTime - currentTimeInSeconds;
 
-        var progress = (elapsedTime / totalTime) * 100;
-        var percent = progress * 100;
-        console.log("Percentage: " + percent + "%");
+        var progress = (elapsedTime / totalTime ) * 100;
 
-        $(".progress-bar").css("width", percent + "%");
+        $(".progress-bar").css("width", progress + "%");
         updateProgressBar();
     }
 
-    // Closes the message box if the "x" is clicked
+    /* Closes the message box if the "x" is clicked */
     closeMessage.onclick = function() {
         displayMessageBox("", "none");
     };
-
 });
