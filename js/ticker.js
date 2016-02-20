@@ -1,20 +1,23 @@
 $(document).ready(function() {
 
-    // Initializing WOW JS
+    // Initializing WOW JS and Tooltip
     new WOW().init();
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
     
     // Getting HTML Elements by ID
     var d = document;
     var content = d.getElementById("timer-content");
     var message = d.getElementById("message");
     var closeMessage = d.getElementById("close-message");
+    var audio = d.getElementById("audio"); 
 
     // Tags for Timer
     var timerStart = d.getElementById("start-timer");
     var timerStop = d.getElementById("stop-timer");
     var timerReset = d.getElementById("reset-timer");
     var input = d.getElementById("input");
-    var audio = d.getElementById("audio");
 
     // Tags for Stopwatch
     var stopwatchTime = d.getElementById("stopwatch-clock");
@@ -105,33 +108,36 @@ $(document).ready(function() {
     function displayMessageBox(error, type) {
         $(".message-box").css("display", type);
         message.innerHTML = error;
+        $(".message-box").addClass("wow bounceInUp");
     }
 
     // TIMER OPERATIONS
 
     /* Starts the timer if the button is clicked */
     timerStart.onclick = function() {
-        if(input.value === "") { displayMessageBox("Please enter some time.", "block"); }
         var testArr = input.value.split(":");
-        if(!isNumber(testArr[0])) {
-                displayMessageBox("Don't enter text. Enter time bruh.", "block");
-                input.value = "";
-        }
+        if(input.value === "") { displayMessageBox("Don't leave input blank. Type something.", "block"); }
         else {
-            var arr = input.value.split(":");
-            for(var i = 0; i < arr.length; i++) {
-                arr[i] = arr[i].replace("0", "");
-            }
-            hours = parseInt(arr[0]);
-            minutes = parseInt(arr[1]);
-            seconds = parseInt(arr[2]);
-            if(hours > 23 || minutes > 60 || seconds > 60) {
-                displayMessageBox("Please enter time in right format.", "block");
+            if(!isNumber(testArr[0])) {
+                displayMessageBox("Don't try to trick. I have a test case for that.", "block");
                 input.value = "";
             }
             else {
-                convertInputToTime(hours, minutes, seconds);
-                $("#start-timer").prop("disabled", true);
+                var arr = input.value.split(":");
+                for(var i = 0; i < arr.length; i++) {
+                    arr[i] = arr[i].replace("0", "");
+                }
+                hours = parseInt(arr[0]);
+                minutes = parseInt(arr[1]);
+                seconds = parseInt(arr[2]);
+                if(hours > 23 || minutes > 60 || seconds > 60) {
+                    displayMessageBox("Please enter time in right format.", "block");
+                    input.value = "";
+                }
+                else {
+                    convertInputToTime(hours, minutes, seconds);
+                    $("#start-timer").prop("disabled", true);
+                }
             }
         }
     };
@@ -210,20 +216,20 @@ $(document).ready(function() {
         timerClock.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
         timerMilli.innerHTML = milliseconds > 9 ? milliseconds : "0" + milliseconds;
         if(hours == 0 && minutes == 0 && seconds == 0 && milliseconds == 0) {
-            console.log("Everything is 0");
             clearTimeout(t);
+            if (typeof audio.loop == 'boolean') { audio.loop = true; }
+            else {
+                audio.addEventListener('ended', function() {
+                    this.currentTime = 0;
+                    this.play();
+                }, false);
+            }
             audio.play();
         }
         else timerTimeElapsed();
     }
 
     /* Checks whether the input string in valid or not */
-    function isValidInput(input) {
-        var regex = "[\D\g]";
-        if(input.match(regex)) return false;
-        input.value = "";
-        return true;
-    }
 
     /* Progresses the progress bar by taking elapsed time / totalTime */
     function progressTheBar() {
@@ -244,5 +250,6 @@ $(document).ready(function() {
     /* Closes the message box if the "x" is clicked */
     closeMessage.onclick = function() {
         displayMessageBox("", "none");
+        $(".message-box").removeClass("wow bounceInUp");
     };
 });
