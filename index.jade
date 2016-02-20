@@ -16,6 +16,7 @@ html
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
         link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css')
         link(rel='stylesheet', href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+        link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.0.2/css/hover-min.css")
 
         // MY CSS FILE
         link(rel='stylesheet', href='scss/design.css', media="all")
@@ -44,10 +45,10 @@ html
                                 .progress-bar(role='progressbar', id="timer-bar", aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
                             .row
                                 .col-md-4(align="left")
-                                    button.btn.btn-reset(id="reset-timer") Reset
+                                    button.btn.btn-reset.hvr-radial-out(id="reset-timer") Reset
                                 .col-md-8(align="right")
-                                    button.btn.btn-stop(id="stop-timer") Stop
-                                    button.btn.btn-start(id="start-timer") Start
+                                    button.btn.btn-stop.hvr-radial-out(id="stop-timer") Stop
+                                    button.btn.btn-start.hvr-radial-out(id="start-timer") Start
                         #stopwatch.tab-pane(role='tabpanel')
                             p#stopwatch-count 
                                 span#stopwatch-clock 00:34:30
@@ -56,17 +57,17 @@ html
                                 .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 100%;')
                             .row
                                 .col-md-6(align="left")
-                                    button.btn.btn-reset(id="reset-stopwatch") Reset
-                                    button.btn.btn-reset(id="lap-stopwatch") Lap
+                                    button.btn.btn-reset.hvr-radial-out(id="reset-stopwatch") Reset
+                                    button.btn.btn-stop.hvr-radial-out(id="lap-stopwatch", data-toggle="tooltip" data-placement="bottom" title="Coming Soon") Lap
                                 .col-md-6(align="right")
-                                    button.btn.btn-stop(id="stop-stopwatch") Stop
-                                    button.btn.btn-start(id="start-stopwatch") Start
+                                    button.btn.btn-stop.hvr-radial-out(id="stop-stopwatch") Stop
+                                    button.btn.btn-start.hvr-radial-out(id="start-stopwatch") Start
                 .row.message-box.wow.bounceInUp
                     .col-md-11
                         p#message Please enter valid time.
-                    .col-md-1(align="right")
-                        button.close(id="close-message") ×
-        a.about(href="https://github.com/NarulaKeshav/ticker", target="_blank") About Ticker
+                    .col-md-1.close-modal(align="left")
+                        button(id="close-message") ×
+        a.about.hvr-sweep-to-right(href="https://github.com/NarulaKeshav/ticker", target="_blank") About Ticker
 
         // JAVASCRIPT CDNs
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
