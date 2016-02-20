@@ -7,7 +7,8 @@ $gray: #7F8C8D;
 $primary: #333;
 
 /* Declaring Variables */
-$background: linear-gradient(#7FB1C9, #A570CC);
+// $background: linear-gradient(#7FB1C9, #A570CC);
+$background: url("../background.jpg");
 $transparent: transparent;
 
 /* Font Properties */
@@ -41,7 +42,13 @@ body {
     font-family: $font;
     font-weight: $light;
     height: 100vh;
+    width: 100%;
     padding-top: 4%;
+    background-repeat: repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
 }
 a:focus,
 a:hover {
@@ -73,10 +80,11 @@ a:hover {
 }
 .message-box {
     @include transition(0.5s);
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.5);
     padding: 16px 10px;
     margin-top: 20px;
     display: none;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 /* Image Tags CSS */
@@ -155,10 +163,10 @@ img {
 .about:focus {
     @include transition(0.5s);
     position: absolute;
-    bottom: 20px;
+    top: 20px;
     right: 20px;
     font-weight: $normal;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.2);
     padding: 12px 20px;
     text-transform: uppercase;
     font-size: 12px;
@@ -166,7 +174,6 @@ img {
     margin: 0;
 }
 .about:hover {
-    background: rgba(0,0,0,0.4);
     color: $white;
 }
 
@@ -226,8 +233,32 @@ img {
 ::-webkit-input-placeholder {
     color: #909;
 }
-#close-message {
+.close-modal {
+    padding: 0;
+}
+#close-message,
+#close-message:focus {
     @include transition(0.5s);
-    color: $white;
+    line-height: 16px;
+    font-size: 16px;
+    width: 25px;
+    height: 25px;
+    color: rgba(255,255,255,0.7);
     font-weight: $light;
+    background: transparent;
+    border: none;
+    border-radius: 100%;
+    outline: none;
+}
+#close-message:hover {
+    color: $white;
+    background: rgba(255,255,255,0.2);
+}
+
+/* Hover CSS */
+.hvr-radial-out:before {
+    background: #EEE;
+}
+.hvr-sweep-to-right:before {
+    background: rgba(0,0,0,0.2);
 }
