@@ -138,6 +138,11 @@ img {
 .btn-reset:hover {
     background: #EEE;
 }
+.btn-start:disabled,
+.btn-stop:disabled,
+.btn-reset:disabled {
+    cursor: text;
+}
 
 /* Text Properties CSS */
 #stopwatch-count,
