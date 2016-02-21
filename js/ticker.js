@@ -116,6 +116,9 @@ $(document).ready(function() {
         hours = minutes = seconds = milliseconds = 0;
         clearTimeout(t);
         $("#start-stopwatch").prop("disabled", false);
+        stopHour.innerHTML = "0h ";
+        stopMin.innerHTML = "0m ";
+        stopSec.innerHTML = "0s ";
     };
 
     /* Displays a error message box if any errors */
@@ -126,6 +129,7 @@ $(document).ready(function() {
     }
 
     // TIMER OPERATIONS
+    var stopThenStart = false;
 
     /* Starts the timer if the button is clicked */
     timerStart.onclick = function() {
@@ -149,8 +153,18 @@ $(document).ready(function() {
                     input.value = "";
                 }
                 else {
-                    convertInputToTime(hours, minutes, seconds);
+                    if(stopThenStart) {
+                        var split = timerClock.innerHTML.split(":");
+                        hours = parseInt(split[0]);
+                        minutes = parseInt(split[1]);
+                        seconds = parseInt(split[2]);
+                        convertInputToTime(hours, minutes, seconds);
+                    }
+                    else {
+                        convertInputToTime(hours, minutes, seconds);
+                    }
                     $("#start-timer").prop("disabled", true);
+                    $(".progress-bar").css("background", "#FF4D89");
                 }
             }
         }
@@ -158,7 +172,7 @@ $(document).ready(function() {
 
     function isNumber(n) { 
         return /^-?[\d.]+(?:e-?\d+)?$/.test(n); 
-    } 
+    }
 
     /* Stops the timer time when button is clicked */
     timerStop.onclick = function() {
@@ -168,6 +182,10 @@ $(document).ready(function() {
         audio.pause();
         audio.currentTime = 0;
         if(a) { clearInterval(a); }
+        $(".progress-bar").css("background", "#F5F5F5");
+        $(".progress-made").css("color", "#BBB");
+        var currentTime = timerClock.innerHTML;
+        stopThenStart = true;
     };
 
     /* Resets the timer time when button is clicked */
@@ -181,6 +199,8 @@ $(document).ready(function() {
         audio.pause();
         audio.currentTime = 0;
         clearInterval(a);
+        $(".progress-bar").css("background", "#F5F5F5");
+        $(".progress-made").css("color", "#BBB");
     };
 
     /* Updates the time every 15 milliseconds */
