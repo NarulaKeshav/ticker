@@ -1,15 +1,13 @@
 # Ticker - time for success
 Ticker is a timer application that does basic time countdown and stopwatch operation. The progress bar updates when the timer is running to let you know the progress.
-<br>
+<br><br>
 Try out the application here: [Fixing Bugs right now](#)
-<br>
-<br>
+<br><br>
 ![Screenshot](http://i.imgur.com/xCuP1L9.png)
 
 # How it Works
 To get the times to work, I used `setInterval` in order to callback the `update` function and update the time every `n` times. I created variables for `hours`, `minutes`, `seconds`, and `milliseconds` and increment/decrement it. When the timer hits `00:00:00`, an alarm rings, letting you know the time is up. 
-<br>
-<br>
+<br><br>
 I also used Bootstrap's progress bar and updated its width by doing:
 ```
 var elapsedTime = totalTime - currentTimeInSeconds;
