@@ -13,7 +13,7 @@ I also used Bootstrap's progress bar and updated its width by doing:
 var elapsedTime = totalTime - currentTimeInSeconds;
 var progress = (elapsedTime / totalTime ) * 100;
 
-// Updating the width
+// Updates the width
 $(".progress-bar").css("width", progress + "%");
 ```
 
