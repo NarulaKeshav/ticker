@@ -41,31 +41,37 @@ html
                             #timer-content
                                 input.form-control(id="input", placeholder="00:05:00", maxlength="8")
                                 audio(id="audio", src="alarm.mp3")
+                            p.progress-made
+                                span#percent 0%
                             .progress.row
                                 .progress-bar(role='progressbar', id="timer-bar", aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
                             .row
-                                .col-md-4(align="left")
+                                .col-xs-4(align="left")
                                     button.btn.btn-reset.hvr-radial-out(id="reset-timer") Reset
-                                .col-md-8(align="right")
+                                .col-xs-8(align="right")
                                     button.btn.btn-stop.hvr-radial-out(id="stop-timer") Stop
                                     button.btn.btn-start.hvr-radial-out(id="start-timer") Start
                         #stopwatch.tab-pane(role='tabpanel')
                             p#stopwatch-count 
                                 span#stopwatch-clock 00:34:30
                                 span#mili 00
+                            p.progress-made
+                                span#hr 0h 
+                                span#min 0m 
+                                span#sec 0s
                             .progress.row
                                 .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100', style='width: 100%;')
                             .row
-                                .col-md-6(align="left")
+                                .col-xs-6(align="left")
                                     button.btn.btn-reset.hvr-radial-out(id="reset-stopwatch") Reset
                                     button.btn.btn-stop.hvr-radial-out(id="lap-stopwatch", data-toggle="tooltip" data-placement="bottom" title="Coming Soon") Lap
-                                .col-md-6(align="right")
+                                .col-xs-6(align="right")
                                     button.btn.btn-stop.hvr-radial-out(id="stop-stopwatch") Stop
                                     button.btn.btn-start.hvr-radial-out(id="start-stopwatch") Start
                 .row.message-box.wow.bounceInUp
-                    .col-md-11
+                    .col-xs-11
                         p#message Please enter valid time.
-                    .col-md-1.close-modal(align="left")
+                    .col-xs-1.close-modal(align="left")
                         button(id="close-message") ×
         a.about.hvr-sweep-to-right(href="https://github.com/NarulaKeshav/ticker", target="_blank") About Ticker
 
