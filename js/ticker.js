@@ -12,6 +12,7 @@ $(document).ready(function() {
     var message = d.getElementById("message");
     var closeMessage = d.getElementById("close-message");
     var audio = d.getElementById("audio"); 
+    var percent = d.getElementById("percent");
 
     // Tags for Timer
     var timerStart = d.getElementById("start-timer");
@@ -26,6 +27,9 @@ $(document).ready(function() {
     var stopwatchStop = d.getElementById("stop-stopwatch");
     var stopwatchReset = d.getElementById("reset-stopwatch");
     var stopwatchLap = d.getElementById("lap-stopwatch");
+    var stopHour = d.getElementById("hr");
+    var stopMin = d.getElementById("min");
+    var stopSec = d.getElementById("sec");
 
     // Creating Basic Time element
     var timerCount = d.createElement("p");
@@ -39,6 +43,7 @@ $(document).ready(function() {
     var milliseconds = 0;
     var t;
     var p;
+    var a;
 
     /* Resets all the timers to 0 when tab is switched */
     var clickedTab = false;
@@ -78,6 +83,11 @@ $(document).ready(function() {
         //SIMPLIFY THIS CODE
         stopwatchTime.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
         stopwatchMilli.innerHTML = (milliseconds > 9 ? milliseconds : "0" + milliseconds);
+        $(".progress-bar").css("background", "#FF4D89");
+        $(".progress-made").css("color", "#FF4D89");
+        stopHour.innerHTML = hours + "h ";
+        stopMin.innerHTML = minutes + "m ";
+        stopSec.innerHTML = seconds + "s ";
         timeElapsed();
     }
 
@@ -93,12 +103,16 @@ $(document).ready(function() {
     stopwatchStop.onclick = function() {
         clearTimeout(t);
         $("#start-stopwatch").prop("disabled", false);
+        $(".progress-bar").css("background", "#F5F5F5");
+        $(".progress-made").css("color", "#BBB");
     };
 
     /* Resets the stopwatch time on button click */
     stopwatchReset.onclick = function() {
         stopwatchTime.innerHTML = "00:00:00";
         stopwatchMilli.innerHTML = "00";
+        $(".progress-bar").css("background", "#F5F5F5");
+        $(".progress-made").css("color", "#BBB");
         hours = minutes = seconds = milliseconds = 0;
         clearTimeout(t);
         $("#start-stopwatch").prop("disabled", false);
@@ -153,6 +167,7 @@ $(document).ready(function() {
         $("#start-timer").prop("disabled", false);
         audio.pause();
         audio.currentTime = 0;
+        if(a) { clearInterval(a); }
     };
 
     /* Resets the timer time when button is clicked */
@@ -163,6 +178,9 @@ $(document).ready(function() {
         $("#start-timer").prop("disabled", false);
         $(".progress-bar").css("width", "0%");
         hours = minutes = seconds = milliseconds = 0;
+        audio.pause();
+        audio.currentTime = 0;
+        clearInterval(a);
     };
 
     /* Updates the time every 15 milliseconds */
@@ -217,6 +235,7 @@ $(document).ready(function() {
         timerMilli.innerHTML = milliseconds > 9 ? milliseconds : "0" + milliseconds;
         if(hours == 0 && minutes == 0 && seconds == 0 && milliseconds == 0) {
             clearTimeout(t);
+            a = setInterval(timeIsUp, 500);
             if (typeof audio.loop == 'boolean') { audio.loop = true; }
             else {
                 audio.addEventListener('ended', function() {
@@ -229,7 +248,13 @@ $(document).ready(function() {
         else timerTimeElapsed();
     }
 
-    /* Checks whether the input string in valid or not */
+    /* Blinks the timer when time is up */
+    function timeIsUp() {
+        $("#timer-count").fadeOut(500);
+        $("#mili").fadeOut(500);
+        $("#timer-count").fadeIn(500);
+        $("#mili").fadeIn(500);
+    }
 
     /* Progresses the progress bar by taking elapsed time / totalTime */
     function progressTheBar() {
@@ -243,6 +268,8 @@ $(document).ready(function() {
 
         var progress = (elapsedTime / totalTime ) * 100;
 
+        percent.innerHTML = parseInt(progress) + "%";
+        $("#percent").css("color", "#FF4D89");
         $(".progress-bar").css("width", progress + "%");
         updateProgressBar();
     }
