@@ -1,7 +1,7 @@
 # Ticker - time for success
 Ticker is a timer application that does basic time countdown and stopwatch operation. The progress bar updates when the timer is running to let you know the progress.
 <br><br>
-Try out the application here: [Fixing Bugs right now](#)
+Try out the application here: [Working on input validation.](#)
 <br><br>
 ![Screenshot](http://i.imgur.com/xCuP1L9.png)
 
