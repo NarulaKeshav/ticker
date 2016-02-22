@@ -184,7 +184,6 @@ $(document).ready(function() {
         if(a) { clearInterval(a); }
         $(".progress-bar").css("background", "#F5F5F5");
         $(".progress-made").css("color", "#BBB");
-        var currentTime = timerClock.innerHTML;
         stopThenStart = true;
     };
 
@@ -194,8 +193,10 @@ $(document).ready(function() {
         $("#timer-count").css("display", "none");
         $("#input").css("display", "block");
         $("#start-timer").prop("disabled", false);
-        $(".progress-bar").css("width", "0%");
+        progress = 0;
+        $(".progress-bar").css("width", progress + "%");
         hours = minutes = seconds = milliseconds = 0;
+        percent.innerHTML = "0%";
         audio.pause();
         audio.currentTime = 0;
         clearInterval(a);
@@ -229,7 +230,6 @@ $(document).ready(function() {
 
         $("#timer-count").css("display", "block");
         $("#input").css("display", "none");
-        // timerStart.setAttribute("disabled", "true");
 
         progressTheBar();
         updateTimer();
