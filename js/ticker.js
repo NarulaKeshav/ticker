@@ -43,7 +43,6 @@ $(document).ready(function() {
     var milliseconds = 0;
     var t;
     var p;
-    var a;
 
     /* Resets all the timers to 0 when tab is switched */
     var clickedTab = false;
@@ -52,7 +51,7 @@ $(document).ready(function() {
         // Resets all values to 0
         stopwatchTime.innerHTML = "00:00:00";
         stopwatchMilli.innerHTML = "00";
-        clearTimeout(t);
+        clearInterval(t);
         hours = minutes = seconds = milliseconds = 0;
         displayMessageBox("", "none");
 
@@ -80,11 +79,16 @@ $(document).ready(function() {
 
         $("#start-stopwatch").prop("disabled", true);
 
-        //SIMPLIFY THIS CODE
+        // Updates the stopwatch timer by appending necessary 0
         stopwatchTime.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
         stopwatchMilli.innerHTML = (milliseconds > 9 ? milliseconds : "0" + milliseconds);
+
+        // Changes progress bar width and background and color of progress-made class
+        $(".progress-bar").css("width", "100%");
         $(".progress-bar").css("background", "#FF4D89");
         $(".progress-made").css("color", "#FF4D89");
+
+        // Setting values for the stopwatch timer from main stopwatch
         stopHour.innerHTML = hours + "h ";
         stopMin.innerHTML = minutes + "m ";
         stopSec.innerHTML = seconds + "s ";
@@ -101,7 +105,8 @@ $(document).ready(function() {
 
     /* Stops the stopwatch time on button click */
     stopwatchStop.onclick = function() {
-        clearTimeout(t);
+        // Stops the stopwatch time and changes necessary color schemes
+        clearInterval(t);
         $("#start-stopwatch").prop("disabled", false);
         $(".progress-bar").css("background", "#F5F5F5");
         $(".progress-made").css("color", "#BBB");
@@ -109,12 +114,19 @@ $(document).ready(function() {
 
     /* Resets the stopwatch time on button click */
     stopwatchReset.onclick = function() {
+        // Stopwatch time and millisecond is set to 0
         stopwatchTime.innerHTML = "00:00:00";
         stopwatchMilli.innerHTML = "00";
+
+        // Color of progress bar is changed
         $(".progress-bar").css("background", "#F5F5F5");
         $(".progress-made").css("color", "#BBB");
+
+        // hour, minute, second, millisecond variables are set to 0
         hours = minutes = seconds = milliseconds = 0;
-        clearTimeout(t);
+        clearInterval(t);
+
+        // Sets the default values for the stopwatch time
         $("#start-stopwatch").prop("disabled", false);
         stopHour.innerHTML = "0h ";
         stopMin.innerHTML = "0m ";
@@ -133,26 +145,38 @@ $(document).ready(function() {
 
     /* Starts the timer if the button is clicked */
     timerStart.onclick = function() {
+        // Splits the input by ":"
         var testArr = input.value.split(":");
+
+        // If input is empty, show the message
         if(input.value === "") { displayMessageBox("Don't leave input blank. Type something.", "block"); }
         else {
-            if(!isNumber(testArr[0])) {
-                displayMessageBox("Don't try to trick. I have a test case for that.", "block");
+
+            // If the arr is not a number, show message and input.value is empty string
+            if(!isNumber(testArr[0]) || !isNumber(testArr[1]) || !isNumber(testArr[2])) {
+                displayMessageBox("Really? I have a test case for that.", "block");
                 input.value = "";
             }
             else {
+                // Remove all the excessive 0s
                 var arr = input.value.split(":");
                 for(var i = 0; i < arr.length; i++) {
                     arr[i] = arr[i].replace("0", "");
                 }
+
+                // Parse int the values from the array and store to time variables
                 hours = parseInt(arr[0]);
                 minutes = parseInt(arr[1]);
                 seconds = parseInt(arr[2]);
+
+                // If time format is incorrect, show this error and set input entry to blank
                 if(hours > 23 || minutes > 60 || seconds > 60) {
                     displayMessageBox("Please enter time in right format.", "block");
                     input.value = "";
                 }
                 else {
+
+                    // If the timer was stopped before, continue from where it was left off
                     if(stopThenStart) {
                         var split = timerClock.innerHTML.split(":");
                         hours = parseInt(split[0]);
@@ -160,9 +184,11 @@ $(document).ready(function() {
                         seconds = parseInt(split[2]);
                         convertInputToTime(hours, minutes, seconds);
                     }
-                    else {
-                        convertInputToTime(hours, minutes, seconds);
-                    }
+
+                    // Otherwise convert the input to time and update timer
+                    else { convertInputToTime(hours, minutes, seconds); }
+
+                    // Make start button disabled and change progress bar color
                     $("#start-timer").prop("disabled", true);
                     $(".progress-bar").css("background", "#FF4D89");
                 }
@@ -176,32 +202,39 @@ $(document).ready(function() {
 
     /* Stops the timer time when button is clicked */
     timerStop.onclick = function() {
-        // timerStart.setAttribute("disabled", "false");
-        clearTimeout(t);
+        // Enables the start button
         $("#start-timer").prop("disabled", false);
+
+        // If audio is playing, stops the audio and changes time to 0
         audio.pause();
         audio.currentTime = 0;
-        if(a) { clearInterval(a); }
-        $(".progress-bar").css("background", "#F5F5F5");
-        $(".progress-made").css("color", "#BBB");
         stopThenStart = true;
     };
 
     /* Resets the timer time when button is clicked */
     timerReset.onclick = function() {
-        input.value = "";
-        $("#timer-count").css("display", "none");
-        $("#input").css("display", "block");
-        $("#start-timer").prop("disabled", false);
+
+        // Progress is set to 0 and time is set to 0 and percentage is set to 0;
         progress = 0;
-        $(".progress-bar").css("width", progress + "%");
         hours = minutes = seconds = milliseconds = 0;
         percent.innerHTML = "0%";
-        audio.pause();
-        audio.currentTime = 0;
-        clearInterval(a);
+
+        // Updates progress bar width, color, and color of percentage counter
+        $(".progress-bar").css("width", progress + "%");
         $(".progress-bar").css("background", "#F5F5F5");
         $(".progress-made").css("color", "#BBB");
+        
+        // Stops the audio and reset its time
+        audio.pause();
+        audio.currentTime = 0;
+
+        // Input is displayed and timer counter is hidden
+        $("#timer-count").css("display", "none");
+        $("#input").css("display", "block");
+        input.value = "";
+
+        // Start button is enabled
+        $("#start-timer").prop("disabled", false);
     };
 
     /* Updates the time every 15 milliseconds */
@@ -216,6 +249,7 @@ $(document).ready(function() {
 
     /* Grabs the input data and converts it to a string, which is displayed and input is hidden*/
     function convertInputToTime(hr, mn, sc) {
+        $(".progress-bar").css("width", "0%");
 
         // Assigning Properties
         timerCount.setAttribute("id", "timer-count");
@@ -254,8 +288,7 @@ $(document).ready(function() {
         timerClock.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
         timerMilli.innerHTML = milliseconds > 9 ? milliseconds : "0" + milliseconds;
         if(hours == 0 && minutes == 0 && seconds == 0 && milliseconds == 0) {
-            clearTimeout(t);
-            a = setInterval(timeIsUp, 500);
+            clearInterval(t);
             if (typeof audio.loop == 'boolean') { audio.loop = true; }
             else {
                 audio.addEventListener('ended', function() {
@@ -264,16 +297,10 @@ $(document).ready(function() {
                 }, false);
             }
             audio.play();
+            timerClock.innerHTML = "Time is up!";
+            timerMilli.innerHTML = "";
         }
         else timerTimeElapsed();
-    }
-
-    /* Blinks the timer when time is up */
-    function timeIsUp() {
-        $("#timer-count").fadeOut(500);
-        $("#mili").fadeOut(500);
-        $("#timer-count").fadeIn(500);
-        $("#mili").fadeIn(500);
     }
 
     /* Progresses the progress bar by taking elapsed time / totalTime */
